@@ -1,0 +1,495 @@
+.word-practice-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  max-width: 800px;
+  max-height: 500px; /* 세로 길이 조정 */
+  min-width: 700px; /* 가로 길이 조정 */
+  width: 90%; /* 적절한 너비로 조정 */
+  margin: 0 auto; /* 가운데 정렬 */
+  padding: 20px; /* 패딩 조정 */
+  background: linear-gradient(135deg, #e3f2fd 0%, #f0f8ff 100%);
+  font-family: "Inter", sans-serif;
+  color: #2c3e50;
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(143, 188, 219, 0.3);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-sizing: border-box; /* 패딩 포함 너비 계산 */
+  position: relative; /* 상대 위치 설정 */
+}
+
+/* 공통 스타일 수정 */
+.results-container {
+  background: var(--card-bg);
+}
+
+.incorrect-item {
+  background: var(--card-bg);
+}
+
+.count {
+  color: var(--wrong-color);
+}
+
+.perfect-message {
+  color: var(--correct-color);
+}
+
+/* 다크 모드 스타일 */
+.word-practice-container.dark-mode {
+  background: linear-gradient(
+    135deg,
+    var(--background-dark-1),
+    var(--background-dark-2)
+  );
+  border: 1px solid var(--border-dark);
+}
+
+.word-practice-container.dark-mode .results-container {
+  background: var(--result-bg-dark);
+}
+
+.word-practice-container.dark-mode .current-word {
+  color: #a8d0fe;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.word-practice-container.dark-mode .input-box {
+  background: var(--input-bg-dark);
+  border-color: var(--input-border-dark);
+}
+
+.dark-mode .input-box::placeholder {
+  color: #6b7b8f;
+}
+
+.dark-mode .submit-button {
+  background: linear-gradient(90deg, #2a3b52, #3a4b62);
+}
+
+.dark-mode .incorrect {
+  color: #ff6b6b;
+}
+
+.dark-mode .correct {
+  color: #69db7c;
+}
+
+.dark-mode .timer {
+  background: rgba(26, 26, 46, 0.8);
+  color: #a8d0fe;
+}
+
+.dark-mode .remaining-words {
+  background: rgba(74, 144, 226, 0.2);
+  color: #a8d0fe;
+}
+
+.title {
+  font-size: 2rem; /* 제목 크기 조정 */
+  font-weight: 800;
+  margin: 0 0 20px 0;
+  background: linear-gradient(90deg, #4a90e2, #6ab0f3);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-align: center;
+  letter-spacing: 1px;
+}
+
+.remaining-words {
+  font-size: 0.9rem; /* 남은 단어 크기 조정 */
+  color: #4a90e2;
+  background: rgba(74, 144, 226, 0.15);
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-weight: 600;
+  position: absolute; /* 절대 위치 설정 */
+  top: 20px; /* 상단에서 20px 떨어진 위치 */
+  right: 20px; /* 오른쪽에서 20px 떨어진 위치 */
+}
+
+.timer {
+  font-size: 0.9rem; /* 타이머 크기 조정 */
+  color: #7f8c8d;
+  background: rgba(234, 242, 250, 0.9);
+  padding: 8px 16px;
+  border-radius: 20px;
+  margin-bottom: 10px; /* 단어와의 간격 조정 */
+  font-weight: 600;
+}
+
+.current-word {
+  font-size: 2.5rem; /* 현재 단어 크기 조정 */
+  font-weight: 800;
+  margin: 10px 0; /* 여백 조정 */
+  color: #2c3e50;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+  animation: fadeIn 0.5s ease;
+}
+
+.input-box {
+  width: 90%; /* 너비 조정 */
+  padding: 12px 20px;
+  font-size: 1rem;
+  border: 2px solid #d1e8ff;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.95);
+  color: #2c3e50;
+  transition: all 0.3s ease;
+  margin-bottom: 20px;
+  box-sizing: border-box; /* 패딩 포함 너비 계산 */
+}
+
+.input-box::placeholder {
+  color: #bdc3c7;
+  font-style: italic;
+}
+
+.input-box:focus {
+  border-color: #4a90e2;
+  box-shadow: 0 0 12px rgba(74, 144, 226, 0.3);
+}
+
+.submit-button {
+  width: 90%; /* 너비 조정 */
+  padding: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: white;
+  background: linear-gradient(90deg, #4a90e2, #6ab0f3);
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-sizing: border-box; /* 패딩 포함 너비 계산 */
+}
+
+.submit-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(74, 144, 226, 0.4);
+}
+
+/* 정답/오답 메시지 스타일 */
+.message-container {
+  width: 90%; /* 너비 조정 */
+  text-align: center;
+  margin-top: 10px; /* 버튼과의 간격 조정 */
+}
+
+.correct {
+  color: #27ae60;
+  font-size: 1rem;
+  font-weight: 600;
+  animation: fadeIn 0.5s ease;
+}
+
+.incorrect {
+  color: #e74c3c;
+  font-size: 1rem;
+  font-weight: 600;
+  animation: fadeIn 0.5s ease;
+}
+
+.game-over {
+  background: rgba(255, 255, 255, 0.95);
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(143, 188, 219, 0.2);
+  width: 90%;
+  text-align: center;
+}
+
+.game-over h2 {
+  font-size: 1.5rem;
+  color: #4a90e2;
+  margin-bottom: 20px;
+}
+
+.game-over ul {
+  list-style: none;
+  padding: 0;
+}
+
+.game-over li {
+  font-size: 1rem;
+  padding: 10px;
+  margin: 8px 0;
+  background: rgba(234, 242, 250, 0.5);
+  border-radius: 8px;
+  color: #34495e;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .word-practice-container {
+    min-width: 90%; /* 모바일에서 최소 너비 조정 */
+    padding: 15px; /* 패딩 조정 */
+  }
+
+  .title {
+    font-size: 1.8rem; /* 제목 크기 조정 */
+  }
+
+  .current-word {
+    font-size: 2rem; /* 현재 단어 크기 조정 */
+  }
+
+  /* 입력 영역 중앙 정렬 */
+  .input-section {
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  .input-box {
+    font-size: 0.9rem; /* 입력 박스 크기 조정 */
+    padding: 10px 16px; /* 패딩 조정 */
+    text-align: center;
+    margin: 30px 0;
+  }
+
+  .submit-button {
+    font-size: 0.9rem; /* 버튼 크기 조정 */
+    padding: 10px; /* 패딩 조정 */
+  }
+
+  .game-over h2 {
+    font-size: 1.3rem; /* 게임 종료 제목 크기 조정 */
+  }
+
+  .game-over li {
+    font-size: 0.9rem; /* 게임 종료 목록 크기 조정 */
+  }
+}
+
+/* 메시지 컨테이너 */
+.message-container {
+  width: 90%;
+  height: 50px; /* 고정 높이 설정 */
+  margin-top: 10px;
+  text-align: center;
+  position: relative; /* 상대 위치 설정 */
+}
+
+.correct,
+.incorrect {
+  position: absolute; /* 절대 위치 설정 */
+  width: 100%;
+  left: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  animation: fadeIn 0.3s ease;
+  padding: 8px;
+  border-radius: 8px;
+}
+
+.correct {
+  color: #27ae60;
+  background: rgba(39, 174, 96, 0.1);
+}
+
+.incorrect {
+  color: #e74c3c;
+  background: rgba(231, 76, 60, 0.1);
+}
+
+.results-container {
+  text-align: center;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 25px;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 15px;
+  box-shadow: 0 4px 20px rgba(143, 188, 219, 0.2);
+}
+
+.result-title {
+  font-size: 1.8rem;
+  color: #4a90e2;
+  margin-bottom: 25px;
+  font-weight: 700;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* 완벽한 결과 메시지 */
+.perfect-message {
+  color: #27ae60;
+  font-size: 1.4rem;
+  font-weight: 600;
+  padding: 25px;
+  background: rgba(39, 174, 96, 0.1);
+  border-radius: 12px;
+  margin: 20px 0;
+  animation: pulse 1.5s infinite;
+}
+
+/* 틀린 단어 리스트 */
+.incorrect-list {
+  max-height: 300px;
+  overflow-y: auto;
+  margin: 20px 0;
+  padding-right: 10px;
+}
+
+/* 개별 틀린 단어 항목 */
+.incorrect-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  margin: 12px 0;
+  background: rgba(234, 242, 250, 0.8);
+  border-radius: 10px;
+  transition: transform 0.2s ease;
+  border: 1px solid rgba(209, 232, 255, 0.3);
+}
+
+.incorrect-item:hover {
+  transform: translateX(5px);
+  background: rgba(255, 255, 255, 0.95);
+}
+
+.word {
+  font-weight: 700;
+  color: #2c3e50;
+  flex: 1;
+}
+
+.abbreviation {
+  color: #7f8c8d;
+  font-size: 0.9rem;
+  flex: 0.8;
+  text-align: left;
+  padding: 0 15px;
+}
+
+.time {
+  color: #4a90e2;
+  font-weight: 600;
+  flex: 0.5;
+}
+
+.count {
+  color: #e74c3c;
+  font-weight: 700;
+  flex: 0.3;
+  text-align: right;
+}
+
+/* 재시작 버튼 */
+.restart-button {
+  display: block;
+  width: fit-content;
+  margin: 25px auto 0;
+  padding: 15px 50px;
+  border: none;
+  border-radius: 30px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(74, 144, 226, 0.3);
+
+  /* 라이트 모드 색상 */
+  background: linear-gradient(90deg, #4a90e2, #6ab0f3);
+  color: white;
+}
+
+/* 다크 모드 버튼 스타일 */
+.word-practice-container.dark-mode .restart-button {
+  background: linear-gradient(90deg, #2a3b52, #3a4b62);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.perfect-message .restart-button {
+  background: linear-gradient(90deg, #27ae60, #2ecc71);
+}
+
+.restart-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(74, 144, 226, 0.4);
+}
+
+.word-practice-container.dark-mode .restart-button:hover {
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+/* 완벽 메시지 박스 */
+.perfect-message {
+  /* ... 기존 스타일 유지 */
+  background: rgba(39, 174, 96, 0.1);
+  color: #27ae60;
+}
+
+.word-practice-container.dark-mode .perfect-message {
+  background: rgba(105, 219, 124, 0.1);
+  color: #69db7c;
+}
+
+/* 애니메이션 추가 */
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+  .results-container {
+    padding: 15px;
+  }
+
+  .result-title {
+    font-size: 1.5rem;
+  }
+
+  .incorrect-item {
+    flex-wrap: wrap;
+    padding: 12px;
+  }
+
+  .word,
+  .abbreviation,
+  .time,
+  .count {
+    flex: 1 1 50%;
+    padding: 5px 0;
+  }
+
+  .restart-button {
+    width: 90%;
+    padding: 12px;
+    font-size: 1rem;
+  }
+}

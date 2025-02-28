@@ -1,0 +1,132 @@
+/* HwpManager.css */
+/* 서재 기본 테마 */
+.library-theme {
+  --wood-color: #5d432c;
+  --paper-color: #f5f0e6;
+  --gold-accent: #c5a47e;
+}
+/* 기본 컨테이너 */
+.hwp-manager-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+/* 책장 컨테이너 */
+.bookshelf-container {
+  background: linear-gradient(15deg, var(--wood-color) 0%, #473829 100%);
+  padding: 40px;
+  min-height: 80vh;
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* 책 등 디자인 */
+.book-spine {
+  cursor: pointer;
+  width: 50px;
+  margin: 0 15px;
+  transform: rotate(0.5deg);
+  transition: all 0.3s ease;
+  box-shadow: 3px 5px 15px rgba(0, 0, 0, 0.2);
+  position: relative;
+}
+
+.book-spine:hover {
+  transform: translateY(-5px) rotate(-0.5deg);
+}
+
+.spine-title {
+  color: white;
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+  padding: 20px 5px;
+  font-family: "Nanum Myeongjo", serif;
+  letter-spacing: 2px;
+}
+
+.spine-date {
+  position: absolute;
+  bottom: 10px;
+  right: 5px;
+  font-size: 0.8em;
+  opacity: 0.7;
+}
+
+/* 책 상세 뷰 */
+.book-cover {
+  background: var(--paper-color);
+  width: 80%;
+  margin: 50px auto;
+  min-height: 80vh;
+  padding: 40px;
+  box-shadow: 0 0 50px rgba(0, 0, 0, 0.2);
+  position: relative;
+}
+
+.pages {
+  column-count: 2;
+  column-gap: 40px;
+  margin-top: 30px;
+}
+
+.book-paragraph {
+  text-indent: 1em;
+  line-height: 1.8;
+  margin-bottom: 1.5em;
+  font-family: "Gowun Batang", serif;
+  text-align: justify;
+}
+
+.close-book {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: none;
+  border: none;
+  color: var(--gold-accent);
+  font-size: 1.2em;
+  cursor: pointer;
+}
+
+/* 다크 모드 */
+.dark-library {
+  --wood-color: #2d2118;
+  --paper-color: #3a3632;
+  --gold-accent: #a78d6d;
+  background: #1a120b;
+}
+
+.light-library {
+  --wood-color: #d1c0a8;
+  --paper-color: #fffdf9;
+  --gold-accent: #8c735b;
+  background: #f5f0eb;
+}
+
+/* 반응형 책장 */
+.bookshelf {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  justify-content: center;
+  padding: 30px 0;
+}
+
+book-spine {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.book-cover {
+  animation: bookOpen 0.5s ease-out;
+}
+
+@keyframes bookOpen {
+  from {
+    transform: rotateY(90deg);
+    opacity: 0;
+  }
+  to {
+    transform: rotateY(0);
+    opacity: 1;
+  }
+}

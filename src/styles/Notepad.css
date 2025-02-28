@@ -1,0 +1,20 @@
+/* Notepad 다크모드 스타일 */
+.notepad-container.dark-mode {
+  background: linear-gradient(135deg, #1a1a2e, #16213e);
+  color: #e6e6e6;
+}
+
+.dark-mode .custom-upload-btn {
+  background: #2a3b52;
+  color: #a8d0fe;
+}
+
+.dark-mode .custom-upload-btn:hover {
+  background: #3a4b62;
+}
+
+.dark-editor {
+  background: rgba(26, 26, 46, 0.95);
+  border-color: #2a3b52;
+  color: #e6e6e6;
+}
